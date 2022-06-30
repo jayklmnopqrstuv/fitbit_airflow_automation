@@ -1,0 +1,310 @@
+"""
+# odp_level2_feature_store.fitbit_features_bpm
+Calculate Fitbit bpm features for all pim  members.
+Features are calculated over a window of the previous 1, 7, 10, and 14 days of data.
+The following features are calculated for each window:
+
+* period_start_date - First in the window    
+* period_end_date - Last day in the window    
+* earliest_bpm_date - First day of data in the window  
+* latest_bpm_date - Last day of data in the window  
+* mean_bpm - Average BPM rate  
+* sd_bpm - Standard deviation of bpm  
+* min_bpm - Minimum recorded bpm rate  
+* max_bpm - Maximum recorded bpm rate  
+* mean_resting_bpm - Average resting heart rate  
+* sd_resting_bp - Standard deviation of resting bpm  
+* min_resting_bpm -Minimum resting heart rate  
+* max_resting_bpm - Maximum resting heart rate  
+* min_bpm_fatburn - Minimum fatburn heart rate  
+* min_bpm_cardio - Minimum cardio heart rate  
+* min_bpm_peak - Minimum peak heart rate  
+* min_bpm_outofrange - Minimum out of range heart rate  
+* max_bpm_fatburn - Maximum fatburn heart rate  
+* max_bpm_cardio - Maximum cardio heart rate  
+* max_bpm_peak - Maximum peak heart rate  
+* max_bpm_outofrange - Maximum out of range heart rate  
+* days - Number of days 
+* count_ - The number of data points
+
+# odp_level2_feature_store.fitbit_features_event
+Calculate Fitbit bpm features of each event for all pim members.
+Features are calculated from daily events.  
+Events include:
+- sleep stages
+- meal (not yet included)
+
+Table is in long format with the following columns  
+* event - The name of the event.  
+        - wake  
+        - light  
+        - deep 
+        - rem  
+        - awake
+        - asleep
+        - restless
+        - bedtime_start (10 mins before sleep)
+        - bedtime_end (10 mins after sleep_
+* mean_bpm - Estimated from average of bpm during sleep/meal event (daily)
+* sd_bpm - Estimated from the standard bpm value during sleep/meal event (daily)
+* min_bpm - Minimum measured bpm value during sleep/meal event (daily)
+* max_bpm - Maximum measured bpm value during sleep/meal event (daily)
+
+# odp_level2_feature_store.fitbit_features_hrv
+Calculate heart rate variability features for all pim members.
+Features are calculated and derived from the daily bpm values.
+
+* mean_rmssd - Estimated from average of root mean square of successive differences between normal heartbeats (daily)  
+* mean_sdrr - Estimated from average of the standard deviation of all the R-R intervals (daily)  
+
+
+
+"""
+from airflow_utils.macros import common_macros
+from airflow_utils import env, ip_bucket, ip_feature_store, ip_workspace
+
+from airflow import DAG
+from airflow.contrib.operators.bigquery_operator import BigQueryOperator
+from airflow.contrib.operators.bigquery_table_delete_operator import BigQueryTableDeleteOperator
+from airflow.contrib.operators.bigquery_to_gcs import BigQueryToCloudStorageOperator
+from airflow.contrib.operators.gcs_to_bq import GoogleCloudStorageToBigQueryOperator
+from airflow.providers.google.cloud.operators.gcs import GCSDeleteObjectsOperator
+from airflow.providers.google.cloud.operators.gcs import GCSFileTransformOperator
+from airflow.providers.google.cloud.transfers.local_to_gcs import LocalFilesystemToGCSOperator
+
+from airflow_utils.operators import GCSFileJoinTransformOperator
+
+from datetime import datetime, timedelta
+from pathlib import Path
+
+
+
+# Output tables
+bpm_output_table    = ip_feature_store + ".fitbit_features_bpm"  + "{{ ds_nodash }}"
+event_output_table  = ip_feature_store + ".fitbit_features_event" + "{{ ds_nodash }}"
+hrv_output_table    = ip_feature_store + ".fitbit_features_hrv" + "{{ ds_nodash }}"
+
+# Stage tables 
+bpm_stage_table     = ip_workspace + ".fitbit_features_data_bpm" + "{{ ds_nodash }}"
+rest_stage_table    = ip_workspace + ".fitbit_features_data_rest" + "{{ ds_nodash }}"
+hrz_stage_table     = ip_workspace + ".fitbit_features_data_hrz" + "{{ ds_nodash }}"
+event_stage_table   = ip_workspace + ".fitbit_features_data_event" + "{{ ds_nodash }}"
+hrv_stage_table     = ip_workspace + ".fitbit_features_data_hrv" + "{{ ds_nodash }}"
+
+# Query results to csv files
+gcs_dir             = "fitbit_biomarker_features/{{ ds }}"
+bpm_csv             = f"{gcs_dir}/bpm_data*.csv"
+rest_csv            = f"{gcs_dir}/rest_data*.csv"
+hrz_csv             = f"{gcs_dir}/hrz_data*.csv"
+event_csv           = f"{gcs_dir}/event_data*.csv"
+hrv_csv             = f"{gcs_dir}/hrv_data*.csv"
+
+# Output json files
+bpm_features_json    = f"{gcs_dir}/bpm_features.json"
+event_features_json  = f"{gcs_dir}/event_features.json"
+hrv_features_json    = f"{gcs_dir}/hrv_features.json"
+
+# Schema files
+bpm_schema_json     = f"{gcs_dir}/bpm_output_schema.json"
+event_schema_json   = f"{gcs_dir}/event_output_schema.json"
+hrv_schema_json     = f"{gcs_dir}/hrv_output_schema.json"
+repo_dir = Path(__file__).parent.absolute()
+
+# Schedule 11 hours offset from UTC.
+schedule_interval="0 11 * * *"
+
+default_args = {
+    "owner": "Jay Gapuz",
+    "depends_on_past": False,
+    "start_date": datetime(2021, 4, 25),
+    "email_on_failure": env == 'prod',
+    "email_on_retry": False,
+    "retries": 3 if env == 'prod' else 0,
+    "retry_delay": timedelta(minutes=5),
+    "use_legacy_sql": False,
+    "bucket": ip_bucket,
+    "bucket_name": ip_bucket,
+    "source_bucket": ip_bucket,
+    "destination_bucket": ip_bucket,
+}
+
+with DAG("fitbit_biomarker_features",
+          default_args=default_args,
+          schedule_interval=schedule_interval,
+          user_defined_macros=common_macros,
+          ) as dag:
+          
+    dag.doc_md = __doc__
+    bpm_query = BigQueryOperator(
+            task_id="bpm_query",
+            sql="sql/bpm.sql",
+            destination_dataset_table=bpm_stage_table,
+            write_disposition="WRITE_TRUNCATE",
+            time_partitioning={"field": "ds"},
+            retry_delay=timedelta(minutes=30),
+            )
+
+    export_to_gcs_1 = BigQueryToCloudStorageOperator(
+            task_id="export_bpm_to_gcs",
+            source_project_dataset_table=bpm_stage_table,
+            destination_cloud_storage_uris=f"gs://{ip_bucket}/{bpm_csv}",
+            export_format="CSV",
+            )
+    
+    bpmrest_query = BigQueryOperator(
+            task_id="rest_query",
+            sql="sql/restbpm.sql",
+            destination_dataset_table=rest_stage_table,
+            write_disposition="WRITE_TRUNCATE",
+            time_partitioning={"field": "ds"},
+            retry_delay=timedelta(minutes=30),
+            )
+
+    export_to_gcs_2 = BigQueryToCloudStorageOperator(
+            task_id="export_rest_to_gcs",
+            source_project_dataset_table=rest_stage_table,
+            destination_cloud_storage_uris=f"gs://{ip_bucket}/{rest_csv}",
+            export_format="CSV",
+            )
+            
+    bpmhrz_query = BigQueryOperator(
+            task_id="bpmhrz_query",
+            sql="sql/hrzbpm.sql",
+            destination_dataset_table=hrz_stage_table,
+            write_disposition="WRITE_TRUNCATE",
+            time_partitioning={"field": "ds"},
+            retry_delay=timedelta(minutes=30),
+            )
+
+    export_to_gcs_3 = BigQueryToCloudStorageOperator(
+            task_id="export_hrz_to_gcs",
+            source_project_dataset_table=hrz_stage_table,
+            destination_cloud_storage_uris=f"gs://{ip_bucket}/{hrz_csv}",
+            export_format="CSV",
+            )
+            
+    event_query = BigQueryOperator(
+            task_id="event_query",
+            sql="sql/sleep_stage_bpm.sql",
+            destination_dataset_table=event_stage_table,
+            write_disposition="WRITE_TRUNCATE",
+            time_partitioning={"field": "ds"},
+            retry_delay=timedelta(minutes=30),
+            )
+
+    export_to_gcs_4 = BigQueryToCloudStorageOperator(
+            task_id="export_event_to_gcs",
+            source_project_dataset_table=event_stage_table,
+            destination_cloud_storage_uris=f"gs://{ip_bucket}/{event_csv}",
+            export_format="CSV",
+            )
+
+    hrv_query = BigQueryOperator(
+            task_id="hrv_query",
+            sql="sql/hrv.sql",
+            destination_dataset_table=hrv_stage_table,
+            write_disposition="WRITE_TRUNCATE",
+            time_partitioning={"field": "ds"},
+            retry_delay=timedelta(minutes=30),
+            )
+
+    export_to_gcs_5 = BigQueryToCloudStorageOperator(
+            task_id="export_hrv_to_gcs",
+            source_project_dataset_table=hrv_stage_table,
+            destination_cloud_storage_uris=f"gs://{ip_bucket}/{hrv_csv}",
+            export_format="CSV",
+            )
+            
+    feature_calculation = GCSFileJoinTransformOperator(
+            task_id="feature_calculation",
+            source_objects = [bpm_csv, rest_csv, hrz_csv, event_csv, hrv_csv],
+            destination_objects = [bpm_features_json, event_features_json, hrv_features_json],
+            transform_script=["python", f"{repo_dir}/system_files/system.py", "{{ ds }}"],
+            retry_delay=timedelta(minutes=5),
+            )
+
+    upload_bpm_schema = LocalFilesystemToGCSOperator(
+            task_id="upload_bpm_schema",
+            src=f"{repo_dir}/schema/bpm_output_schema.json",
+            dst=bpm_schema_json,
+            )
+    
+    upload_event_schema = LocalFilesystemToGCSOperator(
+            task_id="upload_event_schema",
+            src=f"{repo_dir}/schema/event_output_schema.json",
+            dst=event_schema_json,
+            )
+
+    upload_hrv_schema = LocalFilesystemToGCSOperator(
+            task_id="upload_hrv_schema",
+            src=f"{repo_dir}/schema/hrv_output_schema.json",
+            dst=hrv_schema_json,
+            )
+       
+      
+    bpm_features_to_gbq = GoogleCloudStorageToBigQueryOperator(
+            task_id="bpm_features_to_gbq",
+            source_objects=[bpm_features_json],
+            source_format="NEWLINE_DELIMITED_JSON",
+            destination_project_dataset_table=bpm_output_table,
+            schema_object=bpm_schema_json,
+            write_disposition="WRITE_TRUNCATE",
+            time_partitioning={"field": "ds"},
+            )
+            
+    event_features_to_gbq = GoogleCloudStorageToBigQueryOperator(
+            task_id="event_features_to_gbq",
+            source_objects=[event_features_json],
+            source_format="NEWLINE_DELIMITED_JSON",
+            destination_project_dataset_table=event_output_table,
+            schema_object=event_schema_json,
+            write_disposition="WRITE_TRUNCATE",
+            time_partitioning={"field": "ds"},
+            )   
+            
+    hrv_features_to_gbq = GoogleCloudStorageToBigQueryOperator(
+            task_id="hrv_features_to_gbq",
+            source_objects=[hrv_features_json],
+            source_format="NEWLINE_DELIMITED_JSON",
+            destination_project_dataset_table=hrv_output_table,
+            schema_object=hrv_schema_json,
+            write_disposition="WRITE_TRUNCATE",
+            time_partitioning={"field": "ds"},
+            )
+    
+    cleanup_gcs = GCSDeleteObjectsOperator(
+            task_id="cleanup_gcs",
+            prefix=gcs_dir,
+            )
+    
+    cleanup_gbq_1 = BigQueryTableDeleteOperator(
+            task_id="cleanup_gbq_bpm",
+            deletion_dataset_table=bpm_stage_table
+            )
+    cleanup_gbq_2 = BigQueryTableDeleteOperator(
+            task_id="cleanup_gbq_rest",
+            deletion_dataset_table=rest_stage_table
+            )
+    cleanup_gbq_3 = BigQueryTableDeleteOperator(
+            task_id="cleanup_gbq_hrz",
+            deletion_dataset_table=hrz_stage_table
+            )
+    cleanup_gbq_4 = BigQueryTableDeleteOperator(
+            task_id="cleanup_gbq_event",
+            deletion_dataset_table=event_stage_table
+            )
+    cleanup_gbq_5 = BigQueryTableDeleteOperator(
+            task_id="cleanup_gbq_hrv",
+            deletion_dataset_table=hrv_stage_table
+            )
+    
+    
+    bpm_query >> export_to_gcs_1 >>  feature_calculation >> bpm_features_to_gbq >> event_features_to_gbq >> hrv_features_to_gbq >> cleanup_gcs 
+    bpmrest_query >>  export_to_gcs_2 >> feature_calculation
+    bpmhrz_query >> export_to_gcs_3 >> feature_calculation
+    event_query >> export_to_gcs_4 >> feature_calculation
+    hrv_query >> export_to_gcs_5 >> feature_calculation
+    upload_bpm_schema >> bpm_features_to_gbq >> [cleanup_gbq_1,cleanup_gbq_2,cleanup_gbq_3]
+    upload_event_schema >> event_features_to_gbq >> [cleanup_gbq_4]
+    upload_hrv_schema >> hrv_features_to_gbq >> [cleanup_gbq_5]
+   

@@ -1,0 +1,380 @@
+[
+{
+    "name": "pim_id",
+    "type": "INTEGER",
+    "mode": "NULLABLE",
+    "description": "Identifier of the person"
+  },
+  {
+    "name": "batch_time",
+    "type": "TIMESTAMP",
+    "mode": "NULLABLE",
+    "description": "The time the batch was completed being processed"
+  }, 
+  {
+    "name": "ds",
+    "type": "DATE",
+    "mode": "NULLABLE",
+    "description": "The observation date"
+  },    
+  {
+    "name": "mean_bpm_bedtime_start",
+    "type": "FLOAT",
+    "mode": "NULLABLE",
+    "description": "Estimated from average of bpm 10 mins before start of sleep (sleep/daily)"
+  },
+  {
+    "name": "sd_bpm_bedtime_start",
+    "type": "FLOAT",
+    "mode": "NULLABLE",
+    "description": "Estimated from the standard deviation of bpm 10 mins before start of sleep (sleep/daily)"
+  },
+  {
+    "name": "min_bpm_bedtime_start",
+    "type": "FLOAT",
+    "mode": "NULLABLE",
+    "description": "Minimum bpm value measured 10 mins before start of sleep (sleep/daily)"
+  },
+  {
+    "name": "max_bpm_bedtime_start",
+    "type": "FLOAT",
+    "mode": "NULLABLE",
+    "description": "Maximum bpm value measured 10 mins before start of sleep (sleep/daily)"
+  },
+  {
+    "name": "count_bedtime_start",
+    "type": "FLOAT",
+    "mode": "NULLABLE",
+    "description": "Count of recorded bpm values 10 mins before start of sleep (sleep/daily)"
+  },
+  {
+    "name": "mean_bpm_bedtime_end",
+    "type": "FLOAT",
+    "mode": "NULLABLE",
+    "description": "Estimated from average of bpm 10 mins at the end of sleep (sleep/daily)"
+  },
+  {
+    "name": "sd_bpm_bedtime_end",
+    "type": "FLOAT",
+    "mode": "NULLABLE",
+    "description": "Estimated from the standard deviation of bpm 10 mins at the end of sleep (sleep/daily)"
+  },
+  {
+    "name": "min_bpm_bedtime_end",
+    "type": "FLOAT",
+    "mode": "NULLABLE",
+    "description": "Minimum bpm value measured 10 mins at the end of sleep (sleep/daily)"
+  },
+  {
+    "name": "max_bpm_bedtime_end",
+    "type": "FLOAT",
+    "mode": "NULLABLE",
+    "description": "Maximum bpm value measured 10 mins at the end of sleep (sleep/daily)"
+  },
+  {
+    "name": "count_bedtime_end",
+    "type": "FLOAT",
+    "mode": "NULLABLE",
+    "description": "Count of recorded bpm values 10 mins at the end of sleep (sleep/daily)"
+  },
+  {
+    "name": "mean_bpm_wake",
+    "type": "FLOAT",
+    "mode": "NULLABLE",
+    "description": "Estimated from average of bpm during wake stage (sleep/daily)"
+  },
+  {
+    "name": "sd_bpm_wake",
+    "type": "FLOAT",
+    "mode": "NULLABLE",
+    "description": "Estimated from the standard deviation of bpm during wake stage (sleep/daily)"
+  },
+  {
+    "name": "min_bpm_wake",
+    "type": "FLOAT",
+    "mode": "NULLABLE",
+    "description": "Minimum bpm value measured during wake stage (sleep/daily)"
+  },
+  {
+    "name": "max_bpm_wake",
+    "type": "FLOAT",
+    "mode": "NULLABLE",
+    "description": "Maximum bpm value measured during wake stage (sleep/daily)"
+  },
+  {
+    "name": "count_wake",
+    "type": "FLOAT",
+    "mode": "NULLABLE",
+    "description": "Count of recorded bpm values during wake stage (sleep/daily)"
+  },
+  {
+    "name": "mean_bpm_light",
+    "type": "FLOAT",
+    "mode": "NULLABLE",
+    "description": "Estimated from average of bpm during light sleep stage (sleep/daily)"
+  },
+  {
+    "name": "sd_bpm_light",
+    "type": "FLOAT",
+    "mode": "NULLABLE",
+    "description": "Estimated from the standard deviation of bpm during light sleep stage (sleep/daily)"
+  },
+  {
+    "name": "min_bpm_light",
+    "type": "FLOAT",
+    "mode": "NULLABLE",
+    "description": "Minimum bpm value measured during light sleep stage (sleep/daily)"
+  },
+  {
+    "name": "max_bpm_light",
+    "type": "FLOAT",
+    "mode": "NULLABLE",
+    "description": "Maximum bpm value measured during light sleep stage (sleep/daily)"
+  },
+  {
+    "name": "count_light",
+    "type": "FLOAT",
+    "mode": "NULLABLE",
+    "description": "Count of recorded bpm values during light sleep stage (sleep/daily)"
+  },
+  {
+    "name": "mean_bpm_rem",
+    "type": "FLOAT",
+    "mode": "NULLABLE",
+    "description": "Estimated from average of bpm during rem sleep stage (sleep/daily)"
+  },
+  {
+    "name": "sd_bpm_rem",
+    "type": "FLOAT",
+    "mode": "NULLABLE",
+    "description": "Estimated from the standard deviation of bpm during rem sleep stage (sleep/daily)"
+  },
+  {
+    "name": "min_bpm_rem",
+    "type": "FLOAT",
+    "mode": "NULLABLE",
+    "description": "Minimum bpm value measured during rem sleep stage (sleep/daily)"
+  },
+  {
+    "name": "max_bpm_rem",
+    "type": "FLOAT",
+    "mode": "NULLABLE",
+    "description": "Maximum bpm value measured during rem sleep stage (sleep/daily)"
+  },
+  {
+    "name": "count_rem",
+    "type": "FLOAT",
+    "mode": "NULLABLE",
+    "description": "Count of recorded bpm values during rem sleep stage (sleep/daily)"
+  },
+  {
+    "name": "mean_bpm_deep",
+    "type": "FLOAT",
+    "mode": "NULLABLE",
+    "description": "Estimated from average of bpm during deep sleep stage (sleep/daily)"
+  },
+  {
+    "name": "sd_bpm_deep",
+    "type": "FLOAT",
+    "mode": "NULLABLE",
+    "description": "Estimated from the standard deviation of bpm during deep sleep stage (sleep/daily)"
+  },
+  {
+    "name": "min_bpm_deep",
+    "type": "FLOAT",
+    "mode": "NULLABLE",
+    "description": "Minimum bpm value measured during deep sleep stage (sleep/daily)"
+  },
+  {
+    "name": "max_bpm_deep",
+    "type": "FLOAT",
+    "mode": "NULLABLE",
+    "description": "Maximum bpm value measured during deep sleep stage (sleep/daily)"
+  },
+  {
+    "name": "count_deep",
+    "type": "FLOAT",
+    "mode": "NULLABLE",
+    "description": "Count of recorded bpm values during deep sleep stage (sleep/daily)"
+  },
+  {
+    "name": "mean_bpm_awake",
+    "type": "FLOAT",
+    "mode": "NULLABLE",
+    "description": "Estimated from average of bpm during awake stage (sleep/daily)"
+  },
+  {
+    "name": "sd_bpm_awake",
+    "type": "FLOAT",
+    "mode": "NULLABLE",
+    "description": "Estimated from the standard deviation of bpm during awake stage (sleep/daily)"
+  },
+  {
+    "name": "min_bpm_awake",
+    "type": "FLOAT",
+    "mode": "NULLABLE",
+    "description": "Minimum bpm value measured during awake stage (sleep/daily)"
+  },
+  {
+    "name": "max_bpm_awake",
+    "type": "FLOAT",
+    "mode": "NULLABLE",
+    "description": "Maximum bpm value measured during awake stage (sleep/daily)"
+  },
+  {
+    "name": "count_awake",
+    "type": "FLOAT",
+    "mode": "NULLABLE",
+    "description": "Count of recorded bpm values during awake stage (sleep/daily)"
+  },
+  {
+    "name": "mean_bpm_asleep",
+    "type": "FLOAT",
+    "mode": "NULLABLE",
+    "description": "Estimated from average of bpm during asleep stage (sleep/daily)"
+  },
+  {
+    "name": "sd_bpm_asleep",
+    "type": "FLOAT",
+    "mode": "NULLABLE",
+    "description": "Estimated from the standard deviation of bpm during asleep stage (sleep/daily)"
+  },
+  {
+    "name": "min_bpm_asleep",
+    "type": "FLOAT",
+    "mode": "NULLABLE",
+    "description": "Minimum bpm value measured during asleep stage (sleep/daily)"
+  },
+  {
+    "name": "max_bpm_asleep",
+    "type": "FLOAT",
+    "mode": "NULLABLE",
+    "description": "Maximum bpm value measured during asleep stage (sleep/daily)"
+  },
+  {
+    "name": "count_asleep",
+    "type": "FLOAT",
+    "mode": "NULLABLE",
+    "description": "Count of recorded bpm values during asleep stage (sleep/daily)"
+  },
+  {
+    "name": "mean_bpm_restless",
+    "type": "FLOAT",
+    "mode": "NULLABLE",
+    "description": "Estimated from average of bpm during restless stage (sleep/daily)"
+  },
+  {
+    "name": "sd_bpm_restless",
+    "type": "FLOAT",
+    "mode": "NULLABLE",
+    "description": "Estimated from the standard deviation of bpm during restless stage (sleep/daily)"
+  },
+  {
+    "name": "min_bpm_restless",
+    "type": "FLOAT",
+    "mode": "NULLABLE",
+    "description": "Minimum bpm value measured during restless stage (sleep/daily)"
+  },
+  {
+    "name": "max_bpm_restless",
+    "type": "FLOAT",
+    "mode": "NULLABLE",
+    "description": "Maximum bpm value measured during restless stage (sleep/daily)"
+  },
+  {
+    "name": "count_restless",
+    "type": "FLOAT",
+    "mode": "NULLABLE",
+    "description": "Count of recorded bpm values during restless stage (sleep/daily)"
+  },
+  {
+    "name": "mean_bpm_meal_start",
+    "type": "FLOAT",
+    "mode": "NULLABLE",
+    "description": "Estimated from average of bpm 10 mins before start of meal (meal/daily)"
+  },
+  {
+    "name": "sd_bpm_meal_start",
+    "type": "FLOAT",
+    "mode": "NULLABLE",
+    "description": "Estimated from the standard deviation of bpm during 10 mins start of meal (meal/daily)"
+  },
+  {
+    "name": "min_bpm_meal_start",
+    "type": "FLOAT",
+    "mode": "NULLABLE",
+    "description": "Minimum bpm value measured 10 mins before start of meal (meal/daily)"
+  },
+  {
+    "name": "max_bpm_meal_start",
+    "type": "FLOAT",
+    "mode": "NULLABLE",
+    "description": "Maximum bpm value measured 10 mins before start of meal (meal/daily)"
+  },
+  {
+    "name": "count_meal_start",
+    "type": "FLOAT",
+    "mode": "NULLABLE",
+    "description": "Count of recorded bpm values 10 mins before start of meal (meal/daily)"
+  },
+  {
+    "name": "mean_bpm_peak_postprandial_start",
+    "type": "FLOAT",
+    "mode": "NULLABLE",
+    "description": "Estimated from average of bpm 10 mins before peak postprandial glucose event(meal/daily)"
+  },
+  {
+    "name": "sd_bpm_peak_postprandial_start",
+    "type": "FLOAT",
+    "mode": "NULLABLE",
+    "description": "Estimated from the standard deviation of bpm 10 mins before peak postprandial glucose event (meal/daily)"
+  },
+  {
+    "name": "min_bpm_peak_postprandial_start",
+    "type": "FLOAT",
+    "mode": "NULLABLE",
+    "description": "Minimum bpm value measured 10 mins before peak postprandial glucose event (meal/daily)"
+  },
+  {
+    "name": "max_bpm_peak_postprandial_start",
+    "type": "FLOAT",
+    "mode": "NULLABLE",
+    "description": "Maximum bpm value measured 10 mins before peak postprandial glucose event (meal/daily)"
+  },
+  {
+    "name": "count_peak_postprandial_start",
+    "type": "FLOAT",
+    "mode": "NULLABLE",
+    "description": "Count of recorded bpm values 10 mins before peak postprandial glucose event (meal/daily)"
+  },
+  {
+    "name": "mean_bpm_meal_return_baseline",
+    "type": "FLOAT",
+    "mode": "NULLABLE",
+    "description": "Estimated from average of bpm 10 mins before glucose returned to its baseline value (meal/daily)"
+  },
+  {
+    "name": "sd_bpm_meal_return_baseline",
+    "type": "FLOAT",
+    "mode": "NULLABLE",
+    "description": "Estimated from the standard deviation of bpm 10 mins before glucose returned to its baseline value (meal/daily)"
+  },
+  {
+    "name": "min_bpm_meal_return_baseline",
+    "type": "FLOAT",
+    "mode": "NULLABLE",
+    "description": "Minimum bpm value measured 10 mins before glucose returned to its baseline value (meal/daily)"
+  },
+  {
+    "name": "max_bpm_meal_return_baseline",
+    "type": "FLOAT",
+    "mode": "NULLABLE",
+    "description": "Maximum bpm value measured 10 mins before glucose returned to its baseline value (meal/daily)"
+  },
+  {
+    "name": "count_meal_return_baseline",
+    "type": "FLOAT",
+    "mode": "NULLABLE",
+    "description": "Count of recorded bpm values 10 mins before glucose returned to its baseline value (meal/daily)"
+  }
+]

@@ -1,0 +1,584 @@
+[
+  {
+    "name": "pim_id",
+    "type": "INTEGER",
+    "mode": "NULLABLE",
+    "description": "Identifier of the person"
+  },
+  {
+    "name": "batch_time",
+    "type": "TIMESTAMP",
+    "mode": "NULLABLE",
+    "description": "The time the batch was completed being processed"
+  },
+  {
+    "name": "ds",
+    "type": "DATE",
+    "mode": "NULLABLE",
+    "description": "The observation date"
+  },
+  {
+    "name": "period_1d",
+    "type": "RECORD",
+    "mode": "NULLABLE",
+    "description": "BPM features for the period of 1 day",
+    "fields": [
+      {
+        "name": "period_start_date",
+        "type": "DATE",
+        "mode": "NULLABLE",
+        "description": "Start date of the period"
+      },
+      {
+        "name": "period_end_date",
+        "type": "DATE",
+        "mode": "NULLABLE",
+        "description": "End date of the period"
+      },
+      {
+        "name": "earliest_bpm_date",
+        "type": "DATE",
+        "mode": "NULLABLE",
+        "description": "Earliest BPM date"
+      },
+      {
+        "name": "latest_bpm_date",
+        "type": "DATE",
+        "mode": "NULLABLE",
+        "description": "Latest BPM date"
+      },
+      {
+        "name": "mean_bpm",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "Average BPM rate"
+      },
+      {
+        "name": "sd_bpm",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "Standard deviation of bpm"
+      },
+      {
+        "name": "min_bpm",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "Minimum bpm rate"
+      },
+      {
+        "name": "max_bpm",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "Maximum bpm rate"
+      },
+      {
+        "name": "mean_resting_bpm",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "Average resting heart rate"
+      },
+      {
+        "name": "sd_resting_bpm",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "Standard deviation of resting bpm"
+      },
+      {
+        "name": "min_resting_bpm",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "Minimum resting heart rate"
+      },
+      {
+        "name": "max_resting_bpm",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "Maximum resting heart rate"
+      },
+      {
+        "name": "min_bpm_fatburn",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "Minimum fatburn heart rate"
+      },
+      {
+        "name": "min_bpm_cardio",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "Minimum cardio heart rate"
+      },
+      {
+        "name": "min_bpm_peak",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "Minimum peak heart rate"
+      },
+      {
+        "name": "min_bpm_outofrange",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "Minimum out of range heart rate"
+      },
+	  {
+        "name": "max_bpm_fatburn",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "Maximum fatburn heart rate"
+      },
+      {
+        "name": "max_bpm_cardio",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "Maximum cardio heart rate"
+      },
+      {
+        "name": "max_bpm_peak",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "Maximum peak heart rate"
+      },
+      {
+        "name": "max_bpm_outofrange",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "Maximum out of range heart rate"
+      },
+      {
+        "name": "days",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "Number of days"
+      },
+      {
+        "name": "count_",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "Count"
+      }
+
+    ]
+  },
+  {
+    "name": "period_7d",
+    "type": "RECORD",
+    "mode": "NULLABLE",
+    "description": "BPM features for the period of 7 days",
+    "fields": [
+      {
+        "name": "period_start_date",
+        "type": "DATE",
+        "mode": "NULLABLE",
+        "description": "Start date of the period"
+      },
+      {
+        "name": "period_end_date",
+        "type": "DATE",
+        "mode": "NULLABLE",
+        "description": "End date of the period"
+      },
+      {
+        "name": "earliest_bpm_date",
+        "type": "DATE",
+        "mode": "NULLABLE",
+        "description": "Earliest BPM date"
+      },
+      {
+        "name": "latest_bpm_date",
+        "type": "DATE",
+        "mode": "NULLABLE",
+        "description": "Latest BPM date"
+      },
+      {
+        "name": "mean_bpm",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "Average BPM rate"
+      },
+      {
+        "name": "sd_bpm",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "Standard deviation of bpm"
+      },
+      {
+        "name": "min_bpm",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "Minimum bpm rate"
+      },
+      {
+        "name": "max_bpm",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "Maximum bpm rate"
+      },
+      {
+        "name": "mean_resting_bpm",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "Average resting heart rate"
+      },
+      {
+        "name": "sd_resting_bpm",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "Standard deviation of resting bpm"
+      },
+      {
+        "name": "min_resting_bpm",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "Minimum resting heart rate"
+      },
+      {
+        "name": "max_resting_bpm",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "Maximum resting heart rate"
+      },
+      {
+        "name": "min_bpm_fatburn",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "Minimum fatburn heart rate"
+      },
+      {
+        "name": "min_bpm_cardio",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "Minimum cardio heart rate"
+      },
+      {
+        "name": "min_bpm_peak",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "Minimum peak heart rate"
+      },
+      {
+        "name": "min_bpm_outofrange",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "Minimum out of range heart rate"
+      },
+	  {
+        "name": "max_bpm_fatburn",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "Maximum fatburn heart rate"
+      },
+      {
+        "name": "max_bpm_cardio",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "Maximum cardio heart rate"
+      },
+      {
+        "name": "max_bpm_peak",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "Maximum peak heart rate"
+      },
+      {
+        "name": "max_bpm_outofrange",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "Maximum out of range heart rate"
+      },
+      {
+        "name": "days",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "Number of days"
+      },
+      {
+        "name": "count_",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "Count"
+      }
+
+    ]
+  },
+  {
+    "name": "period_10d",
+    "type": "RECORD",
+    "mode": "NULLABLE",
+    "description": "BPM features for the period of 10 days",
+    "fields": [
+      {
+        "name": "period_start_date",
+        "type": "DATE",
+        "mode": "NULLABLE",
+        "description": "Start date of the period"
+      },
+      {
+        "name": "period_end_date",
+        "type": "DATE",
+        "mode": "NULLABLE",
+        "description": "End date of the period"
+      },
+      {
+        "name": "earliest_bpm_date",
+        "type": "DATE",
+        "mode": "NULLABLE",
+        "description": "Earliest BPM date"
+      },
+      {
+        "name": "latest_bpm_date",
+        "type": "DATE",
+        "mode": "NULLABLE",
+        "description": "Latest BPM date"
+      },
+      {
+        "name": "mean_bpm",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "Average BPM rate"
+      },
+      {
+        "name": "sd_bpm",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "Standard deviation of bpm"
+      },
+      {
+        "name": "min_bpm",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "Minimum bpm rate"
+      },
+      {
+        "name": "max_bpm",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "Maximum bpm rate"
+      },
+      {
+        "name": "mean_resting_bpm",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "Average resting heart rate"
+      },
+      {
+        "name": "sd_resting_bpm",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "Standard deviation of resting bpm"
+      },
+      {
+        "name": "min_resting_bpm",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "Minimum resting heart rate"
+      },
+      {
+        "name": "max_resting_bpm",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "Maximum resting heart rate"
+      },
+      {
+        "name": "min_bpm_fatburn",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "Minimum fatburn heart rate"
+      },
+      {
+        "name": "min_bpm_cardio",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "Minimum cardio heart rate"
+      },
+      {
+        "name": "min_bpm_peak",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "Minimum peak heart rate"
+      },
+      {
+        "name": "min_bpm_outofrange",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "Minimum out of range heart rate"
+      },
+	  {
+        "name": "max_bpm_fatburn",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "Maximum fatburn heart rate"
+      },
+      {
+        "name": "max_bpm_cardio",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "Maximum cardio heart rate"
+      },
+      {
+        "name": "max_bpm_peak",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "Maximum peak heart rate"
+      },
+      {
+        "name": "max_bpm_outofrange",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "Maximum out of range heart rate"
+      },
+      {
+        "name": "days",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "Number of days"
+      },
+      {
+        "name": "count_",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "Count"
+      }
+
+    ]
+  },
+  {
+    "name": "period_14d",
+    "type": "RECORD",
+    "mode": "NULLABLE",
+    "description": "BPM features for the period of 14 days",
+    "fields": [
+      {
+        "name": "period_start_date",
+        "type": "DATE",
+        "mode": "NULLABLE",
+        "description": "Start date of the period"
+      },
+      {
+        "name": "period_end_date",
+        "type": "DATE",
+        "mode": "NULLABLE",
+        "description": "End date of the period"
+      },
+      {
+        "name": "earliest_bpm_date",
+        "type": "DATE",
+        "mode": "NULLABLE",
+        "description": "Earliest BPM date"
+      },
+      {
+        "name": "latest_bpm_date",
+        "type": "DATE",
+        "mode": "NULLABLE",
+        "description": "Latest BPM date"
+      },
+      {
+        "name": "mean_bpm",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "Average BPM rate"
+      },
+      {
+        "name": "sd_bpm",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "Standard deviation of bpm"
+      },
+      {
+        "name": "min_bpm",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "Minimum bpm rate"
+      },
+      {
+        "name": "max_bpm",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "Maximum bpm rate"
+      },
+      {
+        "name": "mean_resting_bpm",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "Average resting heart rate"
+      },
+      {
+        "name": "sd_resting_bpm",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "Standard deviation of resting bpm"
+      },
+      {
+        "name": "min_resting_bpm",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "Minimum resting heart rate"
+      },
+      {
+        "name": "max_resting_bpm",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "Maximum resting heart rate"
+      },
+      {
+        "name": "min_bpm_fatburn",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "Minimum fatburn heart rate"
+      },
+      {
+        "name": "min_bpm_cardio",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "Minimum cardio heart rate"
+      },
+      {
+        "name": "min_bpm_peak",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "Minimum peak heart rate"
+      },
+      {
+        "name": "min_bpm_outofrange",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "Minimum out of range heart rate"
+      },
+	  {
+        "name": "max_bpm_fatburn",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "Maximum fatburn heart rate"
+      },
+      {
+        "name": "max_bpm_cardio",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "Maximum cardio heart rate"
+      },
+      {
+        "name": "max_bpm_peak",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "Maximum peak heart rate"
+      },
+      {
+        "name": "max_bpm_outofrange",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "Maximum out of range heart rate"
+      },
+      {
+        "name": "days",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "Number of days"
+      },
+      {
+        "name": "count_",
+        "type": "FLOAT",
+        "mode": "NULLABLE",
+        "description": "Count"
+      }
+
+    ]
+  }
+]

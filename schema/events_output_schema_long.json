@@ -1,0 +1,68 @@
+[
+  {
+    "name": "pim_id",
+    "type": "INTEGER",
+    "mode": "NULLABLE",
+    "description": "Identifier of the person"
+  },
+  {
+    "name": "batch_time",
+    "type": "TIMESTAMP",
+    "mode": "NULLABLE",
+    "description": "The time the batch was completed being processed"
+  }, 
+  {
+    "name": "ds",
+    "type": "DATE",
+    "mode": "NULLABLE",
+    "description": "The observation date"
+  },    
+  {
+    "name": "start_time",
+    "type": "DATETIME",
+    "mode": "NULLABLE",
+    "description": "Start time of the event (local)"
+  },
+  {
+    "name": "end_time",
+    "type": "DATETIME",
+    "mode": "NULLABLE",
+    "description": "End time of the event (local)"
+  },
+  {
+    "name": "event",
+    "type": "STRING",
+    "mode": "REQUIRED",
+    "description": "Name of the event(sleep/meal)"
+  },
+  {
+    "name": "mean_bpm",
+    "type": "FLOAT",
+    "mode": "NULLABLE",
+    "description": "Estimated from average of bpm during sleep/meal event (daily)"
+  },
+  {
+    "name": "sd_bpm",
+    "type": "FLOAT",
+    "mode": "NULLABLE",
+    "description": "Estimated from the standard deviation of bpm values during sleep/meal event (daily)"
+  },
+  {
+    "name": "min_bpm",
+    "type": "FLOAT",
+    "mode": "NULLABLE",
+    "description": "Minimum bpm value measured during sleep/meal event (daily)"
+  },
+  {
+    "name": "max_bpm",
+    "type": "FLOAT",
+    "mode": "NULLABLE",
+    "description": "Maximum bpm value measured during sleep/meal event (daily)"
+  },
+  {
+    "name": "count_",
+    "type": "FLOAT",
+    "mode": "NULLABLE",
+    "description": "Count of recorded bpm values during sleep/meal event (daily)"
+  }
+]

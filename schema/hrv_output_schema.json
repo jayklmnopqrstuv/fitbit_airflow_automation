@@ -1,0 +1,32 @@
+[
+  {
+    "name": "ds",
+    "type": "DATE",
+    "mode": "NULLABLE",
+    "description": "The observation date"
+  },
+  {
+    "name": "pim_id",
+    "type": "INTEGER",
+    "mode": "NULLABLE",
+    "description": "Identifier of the person"
+  },
+  {
+    "name": "mean_rmssd",
+    "type": "FLOAT",
+    "mode": "NULLABLE",
+    "description": "Estimated from average of root mean square of successive differences between normal heartbeats (daily)"
+  },
+  {
+    "name": "mean_sdrr",
+    "type": "FLOAT",
+    "mode": "NULLABLE",
+    "description": "Estimated from average of the standard deviation of all the R-R intervals (daily)"
+  },
+  {
+    "name": "batch_time",
+    "type": "TIMESTAMP",
+    "mode": "NULLABLE",
+    "description": "The time the batch was completed being processed"
+  }  
+]
